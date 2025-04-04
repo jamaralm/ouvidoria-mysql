@@ -1,0 +1,25 @@
+USE Projeto_Ouvidoria;
+
+CREATE TABLE Users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT 0
+);
+
+CREATE TABLE ManifestTypes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE Manifestations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    type_id INT NOT NULL,
+    user_id INT NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    description TEXT NOT NULL,
+    date DATE NOT NULL DEFAULT (CURRENT_DATE),
+    is_done BOOLEAN NOT NULL DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (type_id) REFERENCES ManifestTypes(id) ON DELETE CASCADE
+);
